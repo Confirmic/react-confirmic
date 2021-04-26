@@ -1,5 +1,4 @@
 import React from 'react';
-import Intercom from 'react-intercom';
 import {ConfirmicProvider, ConsentGate} from 'lib';
 
 const App = opts => (
@@ -52,15 +51,15 @@ const App = opts => (
       </picture>
     </ConsentGate>
 
-    {/** React component */}
-    <ConsentGate
+    {/** Example React component for Intercom chat. Install react-intercom */}
+    {/* <ConsentGate
       placeholder="@confirmic/intercom"
       micropolicy="chat"
       placeholderParams={{
         color: 'green',
       }}>
       <Intercom appID="zwwnvxnx" />
-    </ConsentGate>
+    </ConsentGate> */}
   </ConfirmicProvider>
 );
 

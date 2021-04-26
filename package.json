@@ -19,10 +19,9 @@
     "url": "https://github.com/confirmic/react-confirmic/issues"
   },
   "dependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-intercom": "^1.0.15"
+    "prop-types": ">=15.7.2",
+    "react": ">=16.13.1",
+    "react-dom": ">=16.13.1"
   },
   "scripts": {
     "start": "react-scripts start",
