@@ -36,7 +36,7 @@ const config = outputs.map(({file, format}) => ({
   output: {
     file,
     format,
-    name: 'ReactMetomic',
+    name: 'ReactConfirmic',
     globals: {
       react: 'React',
       'react-dom': 'ReactDOM',

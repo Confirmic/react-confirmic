@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {noop} from '../utils';
 
-export const MetomicContext = React.createContext({
+export const ConfirmicContext = React.createContext({
   isReady: false,
   debug: false,
   autoblockingRules: undefined,
@@ -17,7 +17,7 @@ const groupRulesBySlug = (rules = []) =>
     {}
   );
 
-const MetomicProvider = ({
+const ConfirmicProvider = ({
   projectId,
   autoblocking = true,
   debug = false,
@@ -54,37 +54,37 @@ const MetomicProvider = ({
 
   useEffect(() => {
     if (isReady) {
-      window.Metomic('load', {projectId});
+      window.Confirmic('load', {projectId});
     }
   }, [autoblocking, isReady, projectId]);
 
   return (
     <>
-      <MetomicContext.Provider
+      <ConfirmicContext.Provider
         value={{
           isReady,
           // eslint-disable-next-line no-console
-          debug: debug ? (...a) => console.log(`[metomic]`, ...a) : noop,
+          debug: debug ? (...a) => console.log(`[confirmic]`, ...a) : noop,
           autoblockingRules: groupRulesBySlug(
             mtmContext?.configAutoblocking?.rules
           ),
         }}>
         {children}
-      </MetomicContext.Provider>
+      </ConfirmicContext.Provider>
     </>
   );
 };
 
-MetomicProvider.propTypes = {
+ConfirmicProvider.propTypes = {
   projectId: PropTypes.string.isRequired,
   autoblocking: PropTypes.bool,
   debug: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
 
-MetomicProvider.defaultProps = {
+ConfirmicProvider.defaultProps = {
   autoblocking: true,
   debug: false,
 };
 
-export default MetomicProvider;
+export default ConfirmicProvider;

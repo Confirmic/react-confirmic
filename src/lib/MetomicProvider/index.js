@@ -1,1 +1,1 @@
-export {default, MetomicContext} from './MetomicProvider';
+export {default, ConfirmicContext} from './ConfirmicProvider';

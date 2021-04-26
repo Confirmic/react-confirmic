@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import PropTypes from 'prop-types';
-import {MetomicContext} from '../MetomicProvider';
+import {ConfirmicContext} from '../ConfirmicProvider';
 import {noop} from '../utils';
 
-export const MTM_TAG_TYPE = 'text/x-metomic';
+export const MTM_TAG_TYPE = 'text/x-confirmic';
 
 const formatParams = params =>
   params &&
@@ -37,8 +37,8 @@ const ConsentGate = ({
   ...rest
 }) => {
   const [hasConsent, setConsentState] = useState(null);
-  const {isReady: isMetomicReady, autoblockingRules, debug = noop} = useContext(
-    MetomicContext
+  const {isReady: isConfirmicReady, autoblockingRules, debug = noop} = useContext(
+    ConfirmicContext
   );
   const scriptRef = useRef();
 
@@ -48,16 +48,16 @@ const ConsentGate = ({
     );
 
   useEffect(() => {
-    if (!isMetomicReady) return;
+    if (!isConfirmicReady) return;
     /* eslint-disable no-unused-expressions */
-    window.Metomic?.('getConsentState', {slug: micropolicy}, ({enabled}) =>
+    window.Confirmic?.('getConsentState', {slug: micropolicy}, ({enabled}) =>
       setConsentState(enabled)
     );
-    window.Metomic?.('ConsentManager:onConsentStateChange', ({slug, state}) => {
+    window.Confirmic?.('ConsentManager:onConsentStateChange', ({slug, state}) => {
       if (state === 'CONSENTED' && slug === micropolicy) setConsentState(true);
     });
     /* eslint-enable no-unused-expressions */
-  }, [isMetomicReady, micropolicy]);
+  }, [isConfirmicReady, micropolicy]);
 
   if (hasConsent === null) return false;
 

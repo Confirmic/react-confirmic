@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {render, fireEvent, createEvent} from '@testing-library/react';
-import MetomicProvider, {MetomicContext} from './MetomicProvider';
+import ConfirmicProvider, {ConfirmicContext} from './ConfirmicProvider';
 
 const Child = () => {
-  const {isReady, autoblockingRules} = useContext(MetomicContext);
+  const {isReady, autoblockingRules} = useContext(ConfirmicContext);
   return isReady ? (
     <ul>
       All rules
@@ -23,17 +23,17 @@ const Child = () => {
 
 const renderTest = autoblocking =>
   render(
-    <MetomicProvider projectId="some-project-id" autoblocking={autoblocking}>
+    <ConfirmicProvider projectId="some-project-id" autoblocking={autoblocking}>
       <Child />
-    </MetomicProvider>,
+    </ConfirmicProvider>,
     {
       baseElement: document.documentElement,
     }
   );
 
-describe('MetomicProvider', () => {
+describe('ConfirmicProvider', () => {
   beforeEach(() => {
-    global.Metomic = jest.fn();
+    global.Confirmic = jest.fn();
   });
   describe('when Autoblocking is enabled', () => {
     it('renders the autoblocking config into the head', () => {
@@ -67,8 +67,8 @@ describe('MetomicProvider', () => {
         };
         fireEvent(config, createEvent.load(config));
       });
-      it('should load Metomic', () => {
-        expect(global.Metomic).toHaveBeenCalledWith('load', {
+      it('should load Confirmic', () => {
+        expect(global.Confirmic).toHaveBeenCalledWith('load', {
           projectId: 'some-project-id',
         });
       });

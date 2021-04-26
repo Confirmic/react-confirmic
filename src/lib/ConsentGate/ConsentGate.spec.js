@@ -1,11 +1,11 @@
 import React from 'react';
 import {render, fireEvent, createEvent, act} from '@testing-library/react';
 import ConsentGate, {MTM_TAG_TYPE} from './ConsentGate';
-import MetomicProvider from '../MetomicProvider';
+import ConfirmicProvider from '../ConfirmicProvider';
 
 const MTM_TAG_SELECTOR = `[type="${MTM_TAG_TYPE}"]`;
 
-function loadMetomic() {
+function loadConfirmic() {
   const embed = document.head.querySelector('script[src*="embed"]');
   const config = document.head.querySelector('script[src*="config.js"]');
   global._mtm = {};
@@ -17,31 +17,31 @@ function loadMetomic() {
 
 describe('ConsentGate', () => {
   beforeEach(() => {
-    global.Metomic = jest.fn();
+    global.Confirmic = jest.fn();
   });
   afterEach(() => {
     document.head.innerHTML = '';
   });
 
-  describe('When Metomic is not yet loaded', () => {
+  describe('When Confirmic is not yet loaded', () => {
     it('should render nothing', () => {
       const {container} = render(
-        <MetomicProvider projectId="foobar">
+        <ConfirmicProvider projectId="foobar">
           <ConsentGate micropolicy="policy">
             <iframe title="test-iframe" src="some-third-party" />
           </ConsentGate>
-        </MetomicProvider>
+        </ConfirmicProvider>
       );
       expect(container).toMatchInlineSnapshot('<div />');
     });
   });
 
-  describe('When Metomic is loaded', () => {
+  describe('When Confirmic is loaded', () => {
     let baseElement;
     let queryByTestId;
     beforeEach(() => {
       ({baseElement, queryByTestId} = render(
-        <MetomicProvider projectId="foobar">
+        <ConfirmicProvider projectId="foobar">
           <ConsentGate micropolicy="policy">
             <picture data-testid="picture" width={123} height={456}>
               <source
@@ -52,18 +52,18 @@ describe('ConsentGate', () => {
               <img src="some-src" alt="some alt" data-testid="img" />
             </picture>
           </ConsentGate>
-        </MetomicProvider>
+        </ConfirmicProvider>
       ));
     });
     describe('if the user has consented to the policy', () => {
       beforeEach(() => {
-        global.Metomic.mockImplementation((command, props, callback) => {
+        global.Confirmic.mockImplementation((command, props, callback) => {
           if (command === 'getConsentState') {
             expect(props).toEqual({slug: 'policy'});
             act(() => callback({enabled: true}));
           }
         });
-        loadMetomic();
+        loadConfirmic();
       });
       it('should render the children', () => {
         expect(queryByTestId('picture')).toBeTruthy();
@@ -75,7 +75,7 @@ describe('ConsentGate', () => {
     describe('if the user has not yet consented to the policy', () => {
       let onConsentChange;
       beforeEach(() => {
-        global.Metomic.mockImplementation((command, props, callback) => {
+        global.Confirmic.mockImplementation((command, props, callback) => {
           if (command === 'getConsentState') {
             expect(props).toEqual({slug: 'policy'});
             act(() => callback({enabled: false}));
@@ -83,7 +83,7 @@ describe('ConsentGate', () => {
             onConsentChange = props;
           }
         });
-        loadMetomic();
+        loadConfirmic();
       });
       it('should render the mtmTag with fromReact: true', () => {
         expect(baseElement.querySelector(MTM_TAG_SELECTOR)).toHaveProperty(

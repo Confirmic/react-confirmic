@@ -1,11 +1,11 @@
 import React from 'react';
 import Intercom from 'react-intercom';
-import {MetomicProvider, ConsentGate} from 'lib';
+import {ConfirmicProvider, ConsentGate} from 'lib';
 
 const App = opts => (
-  <MetomicProvider {...opts}>
+  <ConfirmicProvider {...opts}>
     {/** <iframe> */}
-    <ConsentGate placeholder="@metomic/youtube" micropolicy="embedded-videos">
+    <ConsentGate placeholder="@confirmic/youtube" micropolicy="embedded-videos">
       <iframe
         title="test-iframe"
         src="https://www.youtube.com/embed/AgpWX18dby4?autoplay=1"
@@ -18,7 +18,7 @@ const App = opts => (
     {/** <img> */}
     <ConsentGate
       micropolicy="marketing"
-      placeholder="@metomic/generic"
+      placeholder="@confirmic/generic"
       placeholderParams={{
         title: 'image',
       }}>
@@ -32,7 +32,7 @@ const App = opts => (
     {/** <picture> with <source>s */}
     <ConsentGate
       micropolicy="marketing"
-      placeholder="@metomic/generic"
+      placeholder="@confirmic/generic"
       placeholderParams={{
         title: 'picture',
       }}>
@@ -54,14 +54,14 @@ const App = opts => (
 
     {/** React component */}
     <ConsentGate
-      placeholder="@metomic/intercom"
+      placeholder="@confirmic/intercom"
       micropolicy="chat"
       placeholderParams={{
         color: 'green',
       }}>
       <Intercom appID="zwwnvxnx" />
     </ConsentGate>
-  </MetomicProvider>
+  </ConfirmicProvider>
 );
 
 export default App;
