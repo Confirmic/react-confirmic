@@ -37,9 +37,11 @@ const ConsentGate = ({
   ...rest
 }) => {
   const [hasConsent, setConsentState] = useState(null);
-  const {isReady: isConfirmicReady, autoblockingRules, debug = noop} = useContext(
-    ConfirmicContext
-  );
+  const {
+    isReady: isConfirmicReady,
+    autoblockingRules,
+    debug = noop,
+  } = useContext(ConfirmicContext);
   const scriptRef = useRef();
 
   if (autoblockingRules[micropolicy])
@@ -53,9 +55,13 @@ const ConsentGate = ({
     window.Confirmic?.('getConsentState', {slug: micropolicy}, ({enabled}) =>
       setConsentState(enabled)
     );
-    window.Confirmic?.('ConsentManager:onConsentStateChange', ({slug, state}) => {
-      if (state === 'CONSENTED' && slug === micropolicy) setConsentState(true);
-    });
+    window.Confirmic?.(
+      'ConsentManager:onConsentStateChange',
+      ({slug, state}) => {
+        if (state === 'CONSENTED' && slug === micropolicy)
+          setConsentState(true);
+      }
+    );
     /* eslint-enable no-unused-expressions */
   }, [isConfirmicReady, micropolicy]);
 

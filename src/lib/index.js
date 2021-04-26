@@ -1,2 +1,5 @@
-export {default as ConsentGate} from './ConsentGate';
-export {default as ConfirmicProvider, ConfirmicContext} from './ConfirmicProvider';
+export {default as ConsentGate} from './ConsentGate/index';
+export {
+  default as ConfirmicProvider,
+  ConfirmicContext,
+} from './ConfirmicProvider/index';
