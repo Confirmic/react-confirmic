@@ -12,6 +12,7 @@
   "license": "MIT",
   "repository": "https://github.com/confirmic/react-confirmic",
   "publishConfig": {
+    "cache": "cache/.npm",
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },

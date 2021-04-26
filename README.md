@@ -34,7 +34,7 @@ const MyApp = () => (
 
 ### `<ConfirmicProvider />`
 The `<ConfirmicProvider>` is the easiest way of getting started.
-Just wrap your app with it pass in the `projectId` prop, and it'll inject the script tags for you in your document's head.
+Just wrap your app with it, pass in the `projectId` prop, and it'll inject the script tags for you in your document's head.
 
 Once the scripts have loaded, `<ConfirmicProvider>` will inform any
 `<ConsentGate>`s in your code whether they should block or allow their `children`
